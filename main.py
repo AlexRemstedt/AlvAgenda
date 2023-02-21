@@ -16,6 +16,9 @@ class AgendaPunt:
         self.begintijd = time(h, m)
         self.eindtijd = self.begintijd.minute + tijdsduur
 
+    def uitgewerkt_stuk(self):
+
+
 
 class Agenda:
     """Agenda class."""
@@ -65,20 +68,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# document = Document()
-
-# document.add_paragraph('')
-
-# p = document.add_paragraph('A plain paragraph having some ')
-# p.add_run('bold').bold = True
-
-
-# title = input("title: ")
-# nummer = input("nummer: ")
-# tijdsduur = input("tijdsduur: ")
-# begintijd = input("begintijd: ")
-# eindtijd = input("eindtijd: ")
-
-# document.save('demo.docx')
