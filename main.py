@@ -17,7 +17,10 @@ class AgendaPunt:
         self.eindtijd = self.begintijd.minute + tijdsduur
 
     def uitgewerkt_stuk(self):
-
+        """Maak een stuk voor de lange agenda."""
+        # opties = [mededeling, begroting, exploitatie, presentatie]
+        # if match met optie, dan pak optie-snippet, met invulling van hierboven
+        return None
 
 
 class Agenda:
