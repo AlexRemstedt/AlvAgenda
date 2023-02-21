@@ -1,0 +1,4 @@
+f"""{self.title} 
+Datum: {self.date} 
+Locatie: {self.location}
+"""
