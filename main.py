@@ -16,12 +16,6 @@ class AgendaPunt:
         self.begintijd = time(h, m)
         self.eindtijd = self.begintijd.minute + tijdsduur
 
-    def uitgewerkt_stuk(self):
-        """Maak een stuk voor de lange agenda."""
-        # opties = [mededeling, begroting, exploitatie, presentatie]
-        # if match met optie, dan pak optie-snippet, met invulling van hierboven
-        return None
-
 
 class Agenda:
     """Agenda class."""
@@ -33,20 +27,16 @@ class Agenda:
         self.doc = Document()
         self.location = location
 
-        # Agenda creations
+        # Start met de agenda bouwen.
         self.init_agenda()
 
-    def add_agenda_punt(self, title, nummer, tijdsduur, begintijd):
-        agenda_punt = AgendaPunt(title, nummer, tijdsduur, begintijd)
-        self.agenda_punten.insert(agenda_punt.nummer, agenda_punt)
-
-    def save_agenda(self):
-        """Save the agenda."""
-        self.doc.save('Agenda.docx')
-        return True
-
     def init_agenda(self):
-        """Initiate agenda."""
+        """Initiate agenda.
+
+        Hierin wordt de titel en de locatie en de tijd neergezet in het word
+        bestand.
+        Voor nu bestaat dit alleen uit een header.
+        """
         # Create header
         with open('snippets/header.txt') as h:
             header = h.read()
@@ -54,13 +44,42 @@ class Agenda:
             evaluated_header = eval(compiled_header)
         self.doc.add_paragraph(evaluated_header)
 
+    def add_agenda_punt(self, title, nummer, tijdsduur, begintijd):
+        """Maak een agendapunt."""
+        agenda_punt = AgendaPunt(title, nummer, tijdsduur, begintijd)
+        self.agenda_punten.insert(agenda_punt.nummer, agenda_punt)
+
     def create_agenda(self):
         for agenda_punt in self.agenda_punten:
             self.doc.add_paragraph(agenda_punt.title, style='List Number')
         return "Agenda updated"
 
+    def save_agenda(self):
+        """Save the agenda."""
+        self.doc.save('Agenda.docx')
+        return True
 
-# Create Document
+    def build_agenda(self):
+        """Build the agenda and save it."""
+        # Todo: add input for agenda_punten.
+        self.create_agenda()
+        self.save_agenda()
+
+
+class LangeAgenda(Agenda):
+    """Uitbreiding op de normale Agenda"""
+
+    def __init__(self, agenda_punten, location):
+        super.__init__(agenda_punten, location)
+
+    def uitgewerkt_stuk(self):
+        """Maak een stuk voor de lange agenda."""
+        # opties = [mededeling, begroting, exploitatie, presentatie]
+        # if match met optie, dan pak optie-snippet, met invulling van
+        # hierboven
+        return None
+
+
 def main():
     alv_agenda = Agenda([], 'Hier')
     alv_agenda.add_agenda_punt("MMD", 2, 10, "19:03")
