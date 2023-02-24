@@ -1,6 +1,7 @@
+"""Create Agenda's."""
 from docx import Document
 from datetime import date
-from .agenda_punt import AgendaPunt
+from agenda_punt import AgendaPunt
 
 
 class Agenda:
@@ -8,9 +9,11 @@ class Agenda:
     title = "Algemene Leden Vergadering van het \"S. G. William Froude\""
 
     def __init__(self, agenda_punten, location, alv=True):
-        """Hierin wordt de titel en de locatie en de tijd neergezet in het word
-        bestand.
-        Voor nu bestaat dit alleen uit een header.
+        """Initialize agenda.
+
+        Hierin wordt de titel en de locatie en de tijd neergezet in het word
+        bestand. Als het een ALV-agenda is, wordt er ook automatisch de eerste
+        5 punten neergezet.
         """
         self.agenda_punten = agenda_punten
         self.date = date.today().strftime("%d-%m-%Y")
@@ -27,18 +30,19 @@ class Agenda:
 
         # Create standard points
         if self.standard_alv:
-            alv()
+            self.alv()
 
-        def alv(self):
-            date_last_alv = input("Wanneer was de vorige ALV?")
-            standard_punten = [
-                    "Opening",
-                    "Mededelingen",
-                    "Mededelingen Onderwijs",
-                    "Mededelingen Financieel",
-                    f"Goedkeuring Notulen van ALV gehouden op {date_last_alv}"]
-            for title in standard_punten:
-                self.doc.add_paragraph(title, style='List Number')
+    def alv(self):
+        """Bouw standaard punten voor ALV."""
+        date_last_alv = input("Wanneer was de vorige ALV?")
+        standard_punten = [
+                "Opening",
+                "Mededelingen",
+                "Mededelingen Onderwijs",
+                "Mededelingen Financieel",
+                f"Goedkeuring Notulen van ALV gehouden op {date_last_alv}"]
+        for title in standard_punten:
+            self.doc.add_paragraph(title, style='List Number')
 
     def add_agenda_punt(self, title, id, tijdsduur, begintijd):
         """Maak een agendapunt."""
