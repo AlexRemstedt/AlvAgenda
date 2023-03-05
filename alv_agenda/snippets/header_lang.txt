@@ -1,0 +1,5 @@
+f"""{self.title} 
+Scheepsbouwkundig Gezelschap \"William Froude\"
+Datum: {self.date} 
+Locatie: {self.location}
+"""

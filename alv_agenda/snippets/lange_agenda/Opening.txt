@@ -1,0 +1,2 @@
+f"""Iedereen hartelijk welkom heten.
+Met de volgende hamerslag open ik de Algemene Leden Vergadering van {self.date} om {self.start_time} en gaan we direct door naar punt 2 op de agenda; de mededelingen. HAMERSLAG"""
