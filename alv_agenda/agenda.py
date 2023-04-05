@@ -2,11 +2,14 @@
 from docx import Document
 from datetime import date
 from agenda_punt import AgendaPunt
+import os
+
+cwd = os.getcwd()
 
 
 class Agenda:
     """Agenda class."""
-    title = "Algemene Leden Vergadering van het \"S. G. William Froude\""
+    title = "Algemene Leden Vergadering van het S. G. \"William Froude\""
 
     def __init__(self, agenda_punten, location, alv=True):
         """Initialize agenda.
@@ -29,7 +32,9 @@ class Agenda:
 
     def header(self):
         """Create header."""
-        evaluated_header = evaluate_paragraph('snippets/header')
+        evaluated_header = eval(compile_paragraph(
+            'alv_agenda/snippets/header.txt'))
+        print(evaluated_header)
         self.doc.add_paragraph(evaluated_header)
 
     def alv(self):
@@ -49,19 +54,19 @@ class Agenda:
         agenda_punt = AgendaPunt(title, id, tijdsduur, begintijd)
         self.agenda_punten.insert(agenda_punt.id, agenda_punt)
 
-    def get_agenda_input(self):
-        switch = True
-        n = 1
-        while switch:
-            print(f"Adding point number {n}")
-            title = input("What is the title? ")
-            id = input("What is the id? ")
-            tijdsduur = input("What is the tijdsduur? ")
-            begintijd = input("What is the begintijd? ")
-            self.add_agenda_punt(title, id, tijdsduur, begintijd)
-            switch = input("Do you want to add another? [y/n] ").lower() == 'y'
-            n += 1
-        return "Done"
+    # def get_agenda_input(self):
+    #     switch = True
+    #     n = 1
+    #     while switch:
+    #         print(f"Adding point number {n}")
+    #         title = input("What is the title? ")
+    #         id = input("What is the id? ")
+    #         tijdsduur = input("What is the tijdsduur? ")
+    #         begintijd = input("What is the begintijd? ")
+    #         self.add_agenda_punt(title, id, tijdsduur, begintijd)
+    #         switch = input("Do you want to add another? [y/n] ").lower() == 'y'
+    #         n += 1
+    #     return "Done"
 
     def create_agenda(self):
         for agenda_punt in self.agenda_punten:
@@ -124,12 +129,11 @@ class LangeAgenda(Agenda):
             self.doc.add_paragraph(par)
 
 
-def evaluate_paragraph(path):
+def compile_paragraph(path):
     with open(path) as p:
         paragraph = p.read()
-        compiled_paragraph = compile(paragraph, '<paragraph>', 'eval')
-        evaluated_paragraph = eval(compiled_paragraph)
-    return evaluated_paragraph
+        compiled_paragraph = compile(paragraph, f'<{paragraph}>', 'eval')
+    return compiled_paragraph
 
     # def match_stuk(self, agendapunt):
     #     """Maak een stuk voor de lange agenda."""
@@ -146,7 +150,7 @@ def evaluate_paragraph(path):
 
 
 def main():
-    x = LangeAgenda(['1', '2'], 'Thuis')
+    _1 = AgendaPunt("Opening", 1, 10, "19:03")
 
 
 if __name__ == "__main__":
