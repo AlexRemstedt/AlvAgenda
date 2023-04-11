@@ -8,8 +8,8 @@ import os
 cwd = os.getcwd()
 
 
-class Agenda:
-    """Agenda class."""
+class AgendaBuilder:
+    """Agenda builder class."""
     title = "Algemene Leden Vergadering van het S. G. \"William Froude\""
     document = Document()
 
